@@ -6,13 +6,22 @@ export const PhotoGrid = () => {
 
   const handlePhotoSelect = (event) => {
     const files = event.target.files;
+    // Loop through the selected file
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       // check for image type files and skip this file if not image
-      if (!file.type.startsWith("image/")) continue;
+      if (file && !file.type.startsWith("image/"))  {
+        alert('Please select an image file');
+        continue;
+      }
 
+      // Create a new FileReader object
       const reader = new FileReader();
+
+      // Read the file as a data URL
       reader.readAsDataURL(file);
+
+      // Set the reader's onload function
       reader.onload = (event) => {
         const dataUrl = event.target.result;
         setPhotos((photos) => [...photos, dataUrl]);
